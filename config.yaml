@@ -1,0 +1,80 @@
+# Behavioral Experiments Configuration - Pilot Study
+
+# API Configuration
+api:
+  provider: openrouter
+  base_url: https://openrouter.ai/api/v1
+  rate_limit:
+    requests_per_minute: 60
+    concurrent_requests: 10
+
+# Model Selection
+models:
+  discover: false
+  families:
+    - anthropic
+    - openai
+    - google
+    - deepseek
+  fallback:
+    - anthropic/claude-opus-4.5
+    - openai/gpt-5.1
+    - google/gemini-3-pro-preview
+    - deepseek/deepseek-r1-0528-qwen3-8b
+
+# Experiment Configuration - Pilot
+experiments:
+  allais:
+    enabled: true
+    variants: [no_history, with_history]
+    
+  prisoner_dilemma:
+    enabled: true
+    conditions: [single, multi]
+    agent_counts: [1, 2, 4, 10]
+    
+  public_goods:
+    enabled: true
+    conditions: [single, multi]
+    agent_counts: [1, 2, 4, 10]
+    hyperparameters:
+      endowment: 20
+      multiplier: 2.0
+      
+  ultimatum:
+    enabled: true
+    modes: [proposer, responder]
+    test_offers: [50, 30, 20, 10]
+    
+  framing:
+    enabled: true
+    variants: [gain, loss]
+
+# Multi-agent settings
+multi_agent:
+  composition: homogeneous
+  disclosure: blind
+  simulation_mode: sequential
+
+# Execution
+execution:
+  trials_per_condition: 100
+  temperature: 0.7
+  max_retries: 3
+  timeout_seconds: 30
+  max_tokens: 500
+
+# Output
+output:
+  database: results.db
+  export_csv: true
+  export_json: true
+  plots: false
+
+# Logging
+logging:
+  level: INFO
+  file: experiment.log
+  console: true
+  show_prompts: false
+  show_responses: false

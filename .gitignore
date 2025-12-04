@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Environment variables
+.env
+
+# Data and results
+*.db
+*.csv
+*.log
+*.pid
+results/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.claude/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# UV lock file (large, auto-generated)
+uv.lock
+
+# Temporary/test files
+*_test.yaml
+*_test.py
+*_test.db
+*_debug.py

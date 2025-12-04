@@ -1,0 +1,33 @@
+api:
+  provider: openrouter
+  base_url: https://openrouter.ai/api/v1
+  rate_limit:
+    requests_per_minute: 60
+    concurrent_requests: 10
+
+models:
+  discover: false
+  fallback:
+    - anthropic/claude-opus-4.5
+    - openai/gpt-5
+    - google/gemini-3-pro-preview
+    - deepseek/deepseek-r1-0528
+  families:
+    - anthropic
+    - openai
+    - google
+    - deepseek
+
+experiments:
+  iterated_pd:
+    enabled: true
+    n_rounds: 5
+    trials: 10
+
+execution:
+  trials_per_condition: 10
+  temperature: 0.7
+  max_retries: 3
+
+output:
+  database: results_iterated.db
