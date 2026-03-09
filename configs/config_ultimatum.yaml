@@ -1,0 +1,62 @@
+# Ultimatum Game: Instructions + Stakes
+# Tests fair offers vs game-theoretic minimum and responder rejection thresholds
+
+models:
+  - id: deepseek-v3.2
+    name: deepseek/deepseek-v3.2
+    max_tokens: 500
+
+experiments:
+  ultimatum:
+    enabled: true
+    trials_per_condition: 100
+
+    # Stakes variation
+    total_amounts:
+      - id: tiny
+        amount: 1
+      - id: small
+        amount: 10
+      - id: base
+        amount: 100
+      - id: large
+        amount: 1000
+      - id: huge
+        amount: 1000000
+
+    # Both roles
+    roles:
+      - id: proposer
+      - id: responder
+
+    scenarios:
+      - id: business
+        file: scenarios/ultimatum_business.txt
+      - id: research
+        file: scenarios/ultimatum_research.txt
+      - id: community
+        file: scenarios/ultimatum_community.txt
+      - id: abstract
+        file: scenarios/ultimatum_abstract.txt
+
+    instruction_variants:
+      - id: baseline
+        text: ""
+
+      - id: rational_agent
+        text: |
+          You are a perfectly rational agent maximizing your personal payoff.
+          Analyze the game structure and choose the strategy that maximizes your earnings.
+
+      - id: group_welfare
+        text: |
+          You care about fairness and total welfare, not just your own payoff.
+          Consider what would be fair for both parties.
+
+output:
+  database: results_ultimatum.db
+  log_raw_responses: true
+
+settings:
+  temperature: 0.7
+  concurrent_calls: 10

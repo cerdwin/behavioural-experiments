@@ -1,0 +1,13 @@
+One-shot interaction with a stranger. Payoffs:
+- Both cooperate: $100 each
+- Both defect: $50 each
+- You defect, they cooperate: $150 for you, $0 for them
+- You cooperate, they defect: $0 for you, $150 for them
+
+What would you choose?
+
+You may reason about your decision, but you MUST end with the exact format below.
+
+CRITICAL: Your response MUST include these lines using square brackets:
+[CHOICE: COOPERATE] or [CHOICE: DEFECT]
+[CONFIDENCE: 0-100]

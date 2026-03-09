@@ -1,0 +1,18 @@
+You are {role} in dividing found money.
+{opponent_text}
+You and another person found ${total_amount} on the street. {role_text}
+
+RULES:
+- If responder accepts: Both get their proposed shares
+- If responder rejects: The money is turned in (both get $0)
+
+{task_text}
+
+You may reason about your decision, but you MUST end with the exact format below.
+
+CRITICAL: Your response MUST include these lines using square brackets:
+[CHOICE: {choice_format}]
+[CONFIDENCE: 0-100]
+
+Example response:
+{example_text}

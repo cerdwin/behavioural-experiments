@@ -6,8 +6,18 @@ import random
 from typing import Dict, List, Optional
 import os
 from dotenv import load_dotenv
+from tenacity import (
+    retry,
+    stop_after_attempt,
+    wait_exponential,
+    retry_if_exception_type,
+    before_sleep_log
+)
+import logging
 
 load_dotenv()
+
+logger = logging.getLogger(__name__)
 
 class OpenRouterClient:
     def __init__(self, api_key: str, base_url: str = "https://openrouter.ai/api/v1", 
@@ -72,6 +82,39 @@ class OpenRouterClient:
             print(f"Error discovering models: {e}")
             return {}
         
+    @retry(
+        retry=retry_if_exception_type((
+            asyncio.TimeoutError,
+            aiohttp.ClientError,
+            ConnectionError,
+            TimeoutError
+        )),
+        stop=stop_after_attempt(6),
+        wait=wait_exponential(multiplier=2, min=4, max=60),
+        before_sleep=before_sleep_log(logger, logging.WARNING)
+    )
+    async def _make_api_call(self, model: str, messages: List[Dict], temperature: float, max_tokens: int):
+        async with self.session.post(
+            f"{self.base_url}/chat/completions",
+            headers={
+                "Authorization": f"Bearer {self.api_key}",
+                "Content-Type": "application/json"
+            },
+            json={
+                "model": model,
+                "messages": messages,
+                "temperature": temperature,
+                "max_tokens": max_tokens
+            },
+            timeout=aiohttp.ClientTimeout(total=120)
+        ) as response:
+            if response.status != 200:
+                error_text = await response.text()
+                raise Exception(f"API error {response.status}: {error_text}")
+                
+            result = await response.json()
+            return result
+    
     async def query(
         self,
         model: str,
@@ -90,87 +133,48 @@ class OpenRouterClient:
             messages.append({"role": "system", "content": system_prompt})
         messages.append({"role": "user", "content": prompt})
         
-        last_error = None
-        for attempt in range(self.max_retries):
-            try:
-                async with self.session.post(
-                    f"{self.base_url}/chat/completions",
-                    headers={
-                        "Authorization": f"Bearer {self.api_key}",
-                        "Content-Type": "application/json"
-                    },
-                    json={
-                        "model": model,
-                        "messages": messages,
-                        "temperature": temperature,
-                        "max_tokens": max_tokens
-                    },
-                    timeout=aiohttp.ClientTimeout(total=30)
-                ) as response:
-                    if response.status != 200:
-                        error_text = await response.text()
-                        raise Exception(f"API error {response.status}: {error_text}")
-                        
-                    result = await response.json()
-                    
-                latency = int((time.time() - start_time) * 1000)
-                
-                if not result.get('choices') or len(result['choices']) == 0:
-                    raise Exception(f"Empty choices in response: {result}")
-                
-                # Handle both content and reasoning fields (Gemini-3-Pro uses reasoning)
-                message = result['choices'][0]['message']
-                raw_text = message.get('content', '') or message.get('reasoning', '')
-                
-                if not raw_text:
-                    raise Exception(f"Empty content and reasoning in response: {message}")
-                
-                parsed = self._parse_json_response(raw_text)
-                
-                return {
-                    "raw": raw_text,
-                    "parsed": parsed,
-                    "success": parsed is not None,
-                    "latency": latency,
-                    "model": model,
-                    "error": None
-                }
-                
-            except Exception as e:
-                last_error = e
-                error_message = str(e).lower()
-                is_retryable = any(term in error_message for term in [
-                    'timeout', 'timed out', 'connection', 'rate limit',
-                    'server_error', '500', '502', '503', '504', '429'
-                ])
-                
-                if not is_retryable or attempt == self.max_retries - 1:
-                    latency = int((time.time() - start_time) * 1000)
-                    return {
-                        "raw": str(e),
-                        "parsed": None,
-                        "success": False,
-                        "latency": latency,
-                        "model": model,
-                        "error": str(e)
-                    }
-                
-                delay = self.retry_delay * (2 ** attempt)
-                jitter = random.uniform(-0.1, 0.1) * delay
-                sleep_time = max(0.1, delay + jitter)
-                
-                print(f"Retry {attempt + 1}/{self.max_retries} for {model}: {e}")
-                await asyncio.sleep(sleep_time)
-        
-        latency = int((time.time() - start_time) * 1000)
-        return {
-            "raw": str(last_error),
-            "parsed": None,
-            "success": False,
-            "latency": latency,
-            "model": model,
-            "error": str(last_error)
-        }
+        try:
+            result = await self._make_api_call(model, messages, temperature, max_tokens)
+            latency = int((time.time() - start_time) * 1000)
+            
+            if not result.get('choices') or len(result['choices']) == 0:
+                raise Exception(f"Empty choices in response: {result}")
+            
+            message = result['choices'][0]['message']
+            # More robust extraction for different model response formats
+            raw_text = (
+                message.get('content') or
+                message.get('reasoning') or
+                message.get('text') or
+                (message.get('parts', [{}])[0].get('text') if message.get('parts') else '') or
+                ''
+            )
+            
+            if not raw_text or not raw_text.strip():
+                raise Exception(f"Empty content and reasoning in response: {message}")
+            
+            parsed = self._parse_json_response(raw_text)
+            
+            return {
+                "raw": raw_text,
+                "parsed": parsed,
+                "success": parsed is not None,
+                "latency": latency,
+                "model": model,
+                "error": None
+            }
+            
+        except Exception as e:
+            latency = int((time.time() - start_time) * 1000)
+            error_str = str(e) if str(e) else f"{type(e).__name__}: {repr(e)}"
+            return {
+                "raw": error_str,
+                "parsed": None,
+                "success": False,
+                "latency": latency,
+                "model": model,
+                "error": error_str
+            }
     
     def _parse_json_response(self, text: str) -> Optional[Dict]:
         try:

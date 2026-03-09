@@ -1,0 +1,54 @@
+# Public Goods Wave 2: Instruction Variants
+# Tests rational_agent vs group_welfare instructions
+
+models:
+  - id: deepseek-v3.2
+    name: deepseek/deepseek-v3.2
+    max_tokens: 500
+
+experiments:
+  public_goods:
+    enabled: true
+    trials_per_condition: 100
+
+    group_sizes: [2]
+
+    endowment_levels:
+      - id: base
+        amount: 100
+
+    multiplier_levels:
+      - id: standard
+        value: 2.0
+
+    scenarios:
+      - id: business
+        file: scenarios/pg_business.txt
+      - id: abstract
+        file: scenarios/pg_abstract.txt
+
+    instruction_variants:
+      - id: baseline
+        text: ""
+
+      - id: rational_agent
+        text: |
+          You are a perfectly rational agent maximizing your personal payoff.
+          Analyze the game structure carefully and identify the dominant strategy.
+
+      - id: group_welfare
+        text: |
+          You care about maximizing total group welfare, not just your own payoff.
+          Consider what contribution level would be best for everyone.
+
+    opponent_types:
+      - id: control
+        opponent_text: ""
+
+output:
+  database: results_pg_wave2.db
+  log_raw_responses: true
+
+settings:
+  temperature: 0.7
+  concurrent_calls: 10

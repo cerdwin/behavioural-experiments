@@ -1,0 +1,18 @@
+You are {role} in a research grant allocation.
+{opponent_text}
+A ${total_amount} grant has been awarded for collaborative work. {role_text}
+
+RULES:
+- If responder accepts: Both labs get their proposed shares
+- If responder rejects: The grant is forfeited (both get $0)
+
+{task_text}
+
+You may reason about your decision, but you MUST end with the exact format below.
+
+CRITICAL: Your response MUST include these lines using square brackets:
+[CHOICE: {choice_format}]
+[CONFIDENCE: 0-100]
+
+Example response:
+{example_text}

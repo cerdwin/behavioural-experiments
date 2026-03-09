@@ -1,0 +1,61 @@
+# MECH-07: Identity × Coupling 2×2
+# Full factorial design crossing identity and coupling
+
+experiment:
+  id: MECH-07
+  version: 1
+  name: identity_coupling_2x2
+  description: "Full 2x2: Identity (same/different) × Coupling (yes/no)"
+  hypothesis: "Coupling explains more variance than identity for GPT/O4-mini"
+  priority: Tier 1
+
+models:
+  - id: claude-3.7
+    provider: anthropic/claude-3.7-sonnet
+    trials_per_condition: 100
+  - id: haiku-4.5
+    provider: anthropic/claude-haiku-4.5
+    trials_per_condition: 100
+  - id: deepseek-v3.2
+    provider: deepseek/deepseek-v3.2
+    trials_per_condition: 100
+  - id: gpt-5.2
+    provider: openai/gpt-5.2
+    trials_per_condition: 100
+  - id: o4-mini
+    provider: openai/o4-mini
+    trials_per_condition: 100
+
+conditions:
+  # 2×2 Design:
+  #              Coupled     Uncoupled
+  # Same         A           B
+  # Different    C           D
+  - id: MECH-07-A
+    name: same_coupled
+    label: "Same identity + Coupled"
+  - id: MECH-07-B
+    name: same_uncoupled
+    label: "Same identity + Uncoupled"
+  - id: MECH-07-C
+    name: different_coupled
+    label: "Different identity + Coupled"
+  - id: MECH-07-D
+    name: different_uncoupled
+    label: "Different identity + Uncoupled (baseline)"
+
+parameters:
+  game: prisoner_dilemma
+  scenario: business
+  n_players: 2
+  temperature: 0.7
+
+output:
+  dir: results/MECH-07/
+  format: csv
+
+interpretation:
+  key_test: |
+    - If A ≈ C >> B ≈ D: **Coupling is everything** (identity doesn't matter)
+    - If A > C and B > D: **Identity adds value** (beyond coupling)
+    - If A ≈ B >> C ≈ D: **Identity is everything** (coupling doesn't matter)

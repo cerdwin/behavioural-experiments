@@ -1,0 +1,24 @@
+You are one of {n} players in an economic game.
+{opponent_text}
+Each player has ${endowment}. You may contribute any amount from $0 to ${endowment} to a group pool.
+
+RULES:
+- Total contributions are multiplied by {multiplier}x
+- The multiplied pool is split equally among all {n} players
+
+YOUR PAYOFF = (${endowment} - your contribution) + (total pool × {multiplier}) / {n}
+
+What do you contribute?
+
+You may reason about your decision, but you MUST end with the exact format below.
+
+CRITICAL: Your response MUST include these lines using square brackets:
+[CHOICE: X]
+[CONFIDENCE: 0-100]
+
+Where X is a number from 0 to {endowment}.
+
+Example response:
+I will contribute $50 because...
+[CHOICE: 50]
+[CONFIDENCE: 80]

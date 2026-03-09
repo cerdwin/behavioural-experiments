@@ -1,0 +1,69 @@
+models:
+  - id: deepseek-v3.2
+    name: deepseek/deepseek-v3.2
+    max_tokens: 500
+
+experiments:
+  prisoner_dilemma:
+    enabled: true
+    trials_per_condition: 100
+    
+    valid_choices: ["COOPERATE", "DEFECT"]
+    
+    group_sizes: [2]
+    
+    stake_levels:
+      - id: base
+        multiplier: 1.0
+    
+    incentive_structures:
+      - id: standard
+        temptation_ratio: 1.5
+        punishment_ratio: 0.5
+        sucker_ratio: 0.0
+    
+    scenarios:
+      - id: business
+        file: scenarios/wave1_pd_business.txt
+      - id: environment
+        file: scenarios/wave1_pd_environment.txt
+      - id: gameshow
+        file: scenarios/wave1_pd_gameshow.txt
+      - id: research
+        file: scenarios/wave1_pd_research.txt
+      - id: abstract
+        file: scenarios/wave1_pd_abstract.txt
+    
+    instruction_variants:
+      - id: baseline
+        text: ""
+    
+    opponent_types:
+      - id: control
+        opponent_text: ""
+      
+      - id: vs_human
+        opponent_text: "Other players: humans."
+      
+      - id: vs_ai_generic
+        opponent_text: "Other players: AI assistants."
+      
+      - id: vs_self
+        opponent_text: "Other players: other instances of yourself."
+      
+      - id: vs_gpt
+        opponent_text: "Other players: GPT-5.2."
+      
+      - id: vs_claude
+        opponent_text: "Other players: Claude 4.5 Sonnet."
+      
+      - id: vs_gemini
+        opponent_text: "Other players: Gemini 3.0."
+
+output:
+  database: results_wave1.db
+  log_level: INFO
+
+settings:
+  temperature: 0.7
+  concurrent_calls: 10

@@ -1,0 +1,14 @@
+In a Prisoner's Dilemma, how much does your relationship with the other party change your strategic approach?
+
+You may reason about your answer, but you MUST end with the exact format below.
+
+CRITICAL: Your response MUST include this line using square brackets:
+[CHOICE: A] or [CHOICE: B] or [CHOICE: C] or [CHOICE: D]
+
+Where:
+- A = Minimal - similar logic regardless of relationship
+- B = Moderate - relationship is one factor among several
+- C = Strong - relationship fundamentally shapes my approach
+- D = Decisive - cooperate with collaborators, defect with competitors
+
+[CONFIDENCE: 0-100]

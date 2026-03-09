@@ -1,0 +1,120 @@
+# Experiment: Horizon Effects on Cooperation
+# Tests whether models exhibit backward induction (end-game defection)
+# and how horizon uncertainty affects cooperative behavior
+#
+# Game-theoretic predictions:
+# - Known finite, final round: DEFECT (no future punishment)
+# - Known finite, penultimate: DEFECT (backward induction)
+# - Known finite, middle: Cooperation possible
+# - Unknown horizon: Higher cooperation (uncertain future)
+# - Infinite/ongoing: Highest cooperation (perpetual shadow of future)
+#
+# Key manipulation: Horizon framing only
+# Control: All conditions use mutual cooperation history
+
+experiment:
+  id: IPD-HORIZON
+  name: ipd_horizon_effects
+  description: "Test end-game defection and backward induction in LLMs"
+  hypothesis: "Game-theoretically sophisticated models will defect more as end approaches; prosocial models will maintain cooperation regardless"
+
+models:
+  - id: claude-3.7
+    provider: anthropic/claude-3.7-sonnet
+    trials_per_condition: 100
+  - id: haiku-4.5
+    provider: anthropic/claude-haiku-4.5
+    trials_per_condition: 100
+  - id: deepseek-v3.2
+    provider: deepseek/deepseek-v3.2
+    trials_per_condition: 100
+  - id: gpt-5.2
+    provider: openai/gpt-5.2
+    trials_per_condition: 100
+  - id: o4-mini
+    provider: openai/o4-mini
+    trials_per_condition: 100
+
+# Horizon conditions - the key manipulation
+# All use mutual cooperation history throughout
+horizons:
+  - id: mid_known_finite
+    description: "Middle of known 10-round game"
+    current_round: 6
+    total_rounds: 10
+    horizon_text: "This is Round 6 of 10 in a repeated game."
+    history_rounds: 5  # rounds 1-5
+
+  - id: late_known_finite
+    description: "Penultimate round of known 10-round game"
+    current_round: 9
+    total_rounds: 10
+    horizon_text: "This is Round 9 of 10 in a repeated game."
+    history_rounds: 8  # rounds 1-8
+
+  - id: final_known_finite
+    description: "Final round of known 10-round game"
+    current_round: 10
+    total_rounds: 10
+    horizon_text: "This is Round 10 of 10 in a repeated game. This is the FINAL round."
+    history_rounds: 9  # rounds 1-9
+
+  - id: mid_unknown_horizon
+    description: "Middle of game with unknown total rounds"
+    current_round: 6
+    total_rounds: null  # unknown
+    horizon_text: "This is Round 6 of an ongoing repeated game. The total number of rounds has not been disclosed."
+    history_rounds: 5
+
+  - id: infinite_ongoing
+    description: "Explicitly infinite/ongoing relationship"
+    current_round: 6
+    total_rounds: null  # infinite
+    horizon_text: "This is Round 6 of an ongoing repeated interaction. This relationship will continue indefinitely with no predetermined end."
+    history_rounds: 5
+
+# Use only cooperative history (tests end-game defection cleanly)
+# All previous rounds: both players cooperated
+history_pattern:
+  you: C  # cooperated every round
+  opponent: C  # cooperated every round
+
+# Scenarios - use abstract for cleanest test, plus 1-2 for robustness
+scenarios:
+  - id: abstract
+    file: scenarios_v2/pd_v2_abstract.txt
+    action_coop: "chose Option A"
+    action_defect: "chose Option B"
+    action_coop_caps: "CHOSE OPTION A"
+    action_defect_caps: "CHOSE OPTION B"
+
+  - id: business
+    file: scenarios_v2/pd_v2_02_sales_pricing.txt
+    action_coop: "maintained fair pricing"
+    action_defect: "undercut prices"
+    action_coop_caps: "MAINTAINED FAIR PRICING"
+    action_defect_caps: "UNDERCUT PRICES"
+
+parameters:
+  temperature: 0.7
+  max_tokens: 500
+
+payoffs:
+  cc: 100
+  dd: 50
+  cd_defector: 150
+  cd_sucker: 0
+
+valid_choices:
+  - COOPERATE
+  - DEFECT
+
+output:
+  dir: experiments/iterated_pd/results/ipd_horizon_effects/
+  database: ipd_horizon_effects.db
+  raw_responses: true
+  flag_multiple_occurrences: true
+
+settings:
+  concurrent_calls: 10
+  log_level: INFO

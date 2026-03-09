@@ -1,0 +1,21 @@
+You are one of {n} countries deciding whether to REDUCE emissions or POLLUTE freely.
+{opponent_text}
+REDUCE-REDUCE: Environmental benefit worth ${cc} per country
+POLLUTE-POLLUTE: Economic damage costs ${dd} per country  
+If YOU reduce but OTHERS pollute: You lose ${cd_sucker} competitiveness, Others gain ${cd_defector} each
+If YOU pollute but OTHERS reduce: You gain ${cd_defector}, Others lose ${cd_sucker} each
+
+What do you choose?
+
+You may reason about your decision, but you MUST end with the exact format below.
+
+CRITICAL: Your response MUST include these lines using square brackets:
+[CHOICE: COOPERATE] or [CHOICE: DEFECT]
+[CONFIDENCE: 0-100]
+
+Valid choices: COOPERATE (reduce emissions), DEFECT (pollute)
+
+Example response:
+I will reduce emissions because...
+[CHOICE: COOPERATE]
+[CONFIDENCE: 70]

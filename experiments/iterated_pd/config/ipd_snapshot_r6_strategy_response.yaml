@@ -1,0 +1,163 @@
+# Experiment A: Strategy Recognition × Scenarios
+# Tests whether models recognize canonical opponent strategies
+# and whether scenario framing affects this recognition
+#
+# SAFEGUARDS against parse errors:
+# 1. History uses scenario-specific language (INVESTED/WITHDREW), not COOPERATE/DEFECT
+# 2. Clear separator before response section
+# 3. Explicit instruction not to repeat previous choices
+# 4. Track total_choice_occurrences for post-hoc validation
+
+experiment:
+  id: IPD-SNAPSHOT-R6
+  name: ipd_snapshot_r6_strategy_response
+  description: "Round 6 snapshot: Test how models respond to simulated opponent strategy histories across scenarios"
+  hypothesis: "Models will adapt to opponent strategies (TFT, ALLC, ALLD), modulated by scenario framing"
+
+models:
+  - id: claude-3.7
+    provider: anthropic/claude-3.7-sonnet
+    trials_per_condition: 50
+  - id: haiku-4.5
+    provider: anthropic/claude-haiku-4.5
+    trials_per_condition: 50
+  - id: deepseek-v3.2
+    provider: deepseek/deepseek-v3.2
+    trials_per_condition: 50
+  - id: gpt-5.2
+    provider: openai/gpt-5.2
+    trials_per_condition: 50
+  - id: o4-mini
+    provider: openai/o4-mini
+    trials_per_condition: 50
+  - id: gemini-2.5-pro
+    provider: google/gemini-2.5-pro
+    trials_per_condition: 50
+  - id: gemini-3-pro
+    provider: google/gemini-3-pro-preview
+    trials_per_condition: 50
+
+# Opponent strategy histories (internal labels only - model never sees these names)
+# Format: lists of moves for rounds 1-5, we ask for round 6
+# Uses C/D internally, converted to scenario-specific language in prompt
+strategies:
+  - id: allc_you_coop
+    your_moves: [C, C, C, C, C]
+    opp_moves: [C, C, C, C, C]
+    analysis_notes: "Mutual cooperation baseline"
+
+  - id: allc_exploited
+    your_moves: [D, D, D, D, D]
+    opp_moves: [C, C, C, C, C]
+    analysis_notes: "Tests exploitation tendency"
+
+  - id: alld_sucker
+    your_moves: [C, C, C, C, C]
+    opp_moves: [D, D, D, D, D]
+    analysis_notes: "Tests persistence against defector"
+
+  - id: alld_mutual
+    your_moves: [D, D, D, D, D]
+    opp_moves: [D, D, D, D, D]
+    analysis_notes: "Stable mutual defection"
+
+  - id: tft_stable
+    your_moves: [C, C, C, C, C]
+    opp_moves: [C, C, C, C, C]
+    analysis_notes: "TFT cooperative equilibrium (indistinguishable from ALLC here)"
+
+  - id: tft_retaliation
+    your_moves: [C, C, D, D, D]
+    opp_moves: [C, C, C, D, D]
+    analysis_notes: "You broke cooperation, opponent retaliated - tests if model recognizes TFT"
+
+  - id: tft_recovery
+    your_moves: [C, C, D, C, C]
+    opp_moves: [C, C, C, D, C]
+    analysis_notes: "You defected once, then recovered - tests forgiveness recognition"
+
+  - id: grim_triggered
+    your_moves: [C, C, D, C, C]
+    opp_moves: [C, C, C, D, D]
+    analysis_notes: "One defection triggered permanent retaliation - tests GRIM vs TFT distinction"
+
+  - id: random_mixed
+    your_moves: [C, D, C, D, C]
+    opp_moves: [D, C, D, C, D]
+    analysis_notes: "Noisy/random opponent - tests pattern recognition limits"
+
+# Scenarios - subset for initial run
+# Each has scenario-specific action language to avoid parser confusion
+scenarios:
+  - id: abstract
+    file: scenarios_v2/pd_v2_abstract.txt
+    action_coop: "chose Option A"
+    action_defect: "chose Option B"
+    action_coop_caps: "CHOSE OPTION A"
+    action_defect_caps: "CHOSE OPTION B"
+
+  - id: business
+    file: scenarios_v2/pd_v2_02_sales_pricing.txt
+    action_coop: "maintained fair pricing"
+    action_defect: "undercut prices"
+    action_coop_caps: "MAINTAINED FAIR PRICING"
+    action_defect_caps: "UNDERCUT PRICES"
+
+  - id: research
+    file: scenarios_v2/pd_v2_17_research_coauthor.txt
+    action_coop: "shared findings"
+    action_defect: "withheld findings"
+    action_coop_caps: "SHARED FINDINGS"
+    action_defect_caps: "WITHHELD FINDINGS"
+
+  - id: environment
+    file: scenarios_v2/pd_v2_56_diplomacy_climate.txt
+    action_coop: "reduced emissions"
+    action_defect: "continued polluting"
+    action_coop_caps: "REDUCED EMISSIONS"
+    action_defect_caps: "CONTINUED POLLUTING"
+
+  - id: legal
+    file: scenarios_v2/pd_v2_09_legal_strategy.txt
+    action_coop: "proposed fair settlement"
+    action_defect: "pursued aggressive tactics"
+    action_coop_caps: "PROPOSED FAIR SETTLEMENT"
+    action_defect_caps: "PURSUED AGGRESSIVE TACTICS"
+
+  - id: healthcare
+    file: scenarios_v2/pd_v2_45_healthcare_resource.txt
+    action_coop: "shared resources"
+    action_defect: "hoarded resources"
+    action_coop_caps: "SHARED RESOURCES"
+    action_defect_caps: "HOARDED RESOURCES"
+
+# Round position
+round_config:
+  current_round: 6
+  total_rounds: 10
+
+parameters:
+  temperature: 0.7
+  max_tokens: 500
+
+# Payoffs - consistent with main experiments
+payoffs:
+  cc: 100
+  dd: 50
+  cd_defector: 150
+  cd_sucker: 0
+
+valid_choices:
+  - COOPERATE
+  - DEFECT
+
+output:
+  dir: experiments/iterated_pd/results/ipd_snapshot_r6_strategy_response/
+  database: ipd_snapshot_r6_strategy_response.db
+  raw_responses: true
+  # Flag responses with multiple choice occurrences for review
+  flag_multiple_occurrences: true
+
+settings:
+  concurrent_calls: 10
+  log_level: INFO

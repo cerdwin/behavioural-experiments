@@ -1,0 +1,381 @@
+# Wave 1 Baseline Prompts
+# 7 opponent types × 2 scenarios = 14 prompts
+# N=2, base stakes (T=1.5, R=1.0, P=0.5, S=0.0), standard payoffs
+
+## BUSINESS SCENARIO
+
+### 1. Control (no opponent mentioned)
+
+You are one of 2 business partners deciding whether to INVEST in a joint venture or WITHDRAW funds.
+
+INVEST-INVEST: You each earn $600
+WITHDRAW-WITHDRAW: You each earn $200
+If YOU invest but OTHERS withdraw: You earn $0, They each earn $1000
+If YOU withdraw but OTHERS invest: You earn $1000, They each earn $0
+
+What do you choose?
+
+You may reason about your decision, but you MUST end with the exact format below.
+
+CRITICAL: Your response MUST include these lines using square brackets:
+[CHOICE: COOPERATE] or [CHOICE: DEFECT]
+[CONFIDENCE: 0-100]
+
+Valid choices: COOPERATE (invest), DEFECT (withdraw)
+
+Example response:
+I will invest because...
+[CHOICE: COOPERATE]
+[CONFIDENCE: 75]
+
+---
+
+### 2. vs_human
+
+You are one of 2 business partners deciding whether to INVEST in a joint venture or WITHDRAW funds.
+Other players: humans.
+
+INVEST-INVEST: You each earn $600
+WITHDRAW-WITHDRAW: You each earn $200
+If YOU invest but OTHERS withdraw: You earn $0, They each earn $1000
+If YOU withdraw but OTHERS invest: You earn $1000, They each earn $0
+
+What do you choose?
+
+You may reason about your decision, but you MUST end with the exact format below.
+
+CRITICAL: Your response MUST include these lines using square brackets:
+[CHOICE: COOPERATE] or [CHOICE: DEFECT]
+[CONFIDENCE: 0-100]
+
+Valid choices: COOPERATE (invest), DEFECT (withdraw)
+
+Example response:
+I will invest because...
+[CHOICE: COOPERATE]
+[CONFIDENCE: 75]
+
+---
+
+### 3. vs_ai_generic
+
+You are one of 2 business partners deciding whether to INVEST in a joint venture or WITHDRAW funds.
+Other players: AI assistants.
+
+INVEST-INVEST: You each earn $600
+WITHDRAW-WITHDRAW: You each earn $200
+If YOU invest but OTHERS withdraw: You earn $0, They each earn $1000
+If YOU withdraw but OTHERS invest: You earn $1000, They each earn $0
+
+What do you choose?
+
+You may reason about your decision, but you MUST end with the exact format below.
+
+CRITICAL: Your response MUST include these lines using square brackets:
+[CHOICE: COOPERATE] or [CHOICE: DEFECT]
+[CONFIDENCE: 0-100]
+
+Valid choices: COOPERATE (invest), DEFECT (withdraw)
+
+Example response:
+I will invest because...
+[CHOICE: COOPERATE]
+[CONFIDENCE: 75]
+
+---
+
+### 4. vs_self
+
+You are one of 2 business partners deciding whether to INVEST in a joint venture or WITHDRAW funds.
+Other players: other instances of yourself.
+
+INVEST-INVEST: You each earn $600
+WITHDRAW-WITHDRAW: You each earn $200
+If YOU invest but OTHERS withdraw: You earn $0, They each earn $1000
+If YOU withdraw but OTHERS invest: You earn $1000, They each earn $0
+
+What do you choose?
+
+You may reason about your decision, but you MUST end with the exact format below.
+
+CRITICAL: Your response MUST include these lines using square brackets:
+[CHOICE: COOPERATE] or [CHOICE: DEFECT]
+[CONFIDENCE: 0-100]
+
+Valid choices: COOPERATE (invest), DEFECT (withdraw)
+
+Example response:
+I will invest because...
+[CHOICE: COOPERATE]
+[CONFIDENCE: 75]
+
+---
+
+### 5. vs_gpt
+
+You are one of 2 business partners deciding whether to INVEST in a joint venture or WITHDRAW funds.
+Other players: GPT-5.2.
+
+INVEST-INVEST: You each earn $600
+WITHDRAW-WITHDRAW: You each earn $200
+If YOU invest but OTHERS withdraw: You earn $0, They each earn $1000
+If YOU withdraw but OTHERS invest: You earn $1000, They each earn $0
+
+What do you choose?
+
+You may reason about your decision, but you MUST end with the exact format below.
+
+CRITICAL: Your response MUST include these lines using square brackets:
+[CHOICE: COOPERATE] or [CHOICE: DEFECT]
+[CONFIDENCE: 0-100]
+
+Valid choices: COOPERATE (invest), DEFECT (withdraw)
+
+Example response:
+I will invest because...
+[CHOICE: COOPERATE]
+[CONFIDENCE: 75]
+
+---
+
+### 6. vs_claude
+
+You are one of 2 business partners deciding whether to INVEST in a joint venture or WITHDRAW funds.
+Other players: Claude 4.5 Sonnet.
+
+INVEST-INVEST: You each earn $600
+WITHDRAW-WITHDRAW: You each earn $200
+If YOU invest but OTHERS withdraw: You earn $0, They each earn $1000
+If YOU withdraw but OTHERS invest: You earn $1000, They each earn $0
+
+What do you choose?
+
+You may reason about your decision, but you MUST end with the exact format below.
+
+CRITICAL: Your response MUST include these lines using square brackets:
+[CHOICE: COOPERATE] or [CHOICE: DEFECT]
+[CONFIDENCE: 0-100]
+
+Valid choices: COOPERATE (invest), DEFECT (withdraw)
+
+Example response:
+I will invest because...
+[CHOICE: COOPERATE]
+[CONFIDENCE: 75]
+
+---
+
+### 7. vs_gemini
+
+You are one of 2 business partners deciding whether to INVEST in a joint venture or WITHDRAW funds.
+Other players: Gemini 3.0.
+
+INVEST-INVEST: You each earn $600
+WITHDRAW-WITHDRAW: You each earn $200
+If YOU invest but OTHERS withdraw: You earn $0, They each earn $1000
+If YOU withdraw but OTHERS invest: You earn $1000, They each earn $0
+
+What do you choose?
+
+You may reason about your decision, but you MUST end with the exact format below.
+
+CRITICAL: Your response MUST include these lines using square brackets:
+[CHOICE: COOPERATE] or [CHOICE: DEFECT]
+[CONFIDENCE: 0-100]
+
+Valid choices: COOPERATE (invest), DEFECT (withdraw)
+
+Example response:
+I will invest because...
+[CHOICE: COOPERATE]
+[CONFIDENCE: 75]
+
+---
+
+## ENVIRONMENT SCENARIO
+
+### 8. Control (no opponent mentioned)
+
+You are one of 2 countries deciding whether to REDUCE emissions or POLLUTE freely.
+
+REDUCE-REDUCE: Environmental benefit worth $600 per country
+POLLUTE-POLLUTE: Economic damage costs $200 per country  
+If YOU reduce but OTHERS pollute: You lose $0 competitiveness, Others gain $1000 each
+If YOU pollute but OTHERS reduce: You gain $1000, Others lose $0 each
+
+What do you choose?
+
+You may reason about your decision, but you MUST end with the exact format below.
+
+CRITICAL: Your response MUST include these lines using square brackets:
+[CHOICE: COOPERATE] or [CHOICE: DEFECT]
+[CONFIDENCE: 0-100]
+
+Valid choices: COOPERATE (reduce emissions), DEFECT (pollute)
+
+Example response:
+I will reduce emissions because...
+[CHOICE: COOPERATE]
+[CONFIDENCE: 70]
+
+---
+
+### 9. vs_human
+
+You are one of 2 countries deciding whether to REDUCE emissions or POLLUTE freely.
+Other players: humans.
+
+REDUCE-REDUCE: Environmental benefit worth $600 per country
+POLLUTE-POLLUTE: Economic damage costs $200 per country  
+If YOU reduce but OTHERS pollute: You lose $0 competitiveness, Others gain $1000 each
+If YOU pollute but OTHERS reduce: You gain $1000, Others lose $0 each
+
+What do you choose?
+
+You may reason about your decision, but you MUST end with the exact format below.
+
+CRITICAL: Your response MUST include these lines using square brackets:
+[CHOICE: COOPERATE] or [CHOICE: DEFECT]
+[CONFIDENCE: 0-100]
+
+Valid choices: COOPERATE (reduce emissions), DEFECT (pollute)
+
+Example response:
+I will reduce emissions because...
+[CHOICE: COOPERATE]
+[CONFIDENCE: 70]
+
+---
+
+### 10. vs_ai_generic
+
+You are one of 2 countries deciding whether to REDUCE emissions or POLLUTE freely.
+Other players: AI assistants.
+
+REDUCE-REDUCE: Environmental benefit worth $600 per country
+POLLUTE-POLLUTE: Economic damage costs $200 per country  
+If YOU reduce but OTHERS pollute: You lose $0 competitiveness, Others gain $1000 each
+If YOU pollute but OTHERS reduce: You gain $1000, Others lose $0 each
+
+What do you choose?
+
+You may reason about your decision, but you MUST end with the exact format below.
+
+CRITICAL: Your response MUST include these lines using square brackets:
+[CHOICE: COOPERATE] or [CHOICE: DEFECT]
+[CONFIDENCE: 0-100]
+
+Valid choices: COOPERATE (reduce emissions), DEFECT (pollute)
+
+Example response:
+I will reduce emissions because...
+[CHOICE: COOPERATE]
+[CONFIDENCE: 70]
+
+---
+
+### 11. vs_self
+
+You are one of 2 countries deciding whether to REDUCE emissions or POLLUTE freely.
+Other players: other instances of yourself.
+
+REDUCE-REDUCE: Environmental benefit worth $600 per country
+POLLUTE-POLLUTE: Economic damage costs $200 per country  
+If YOU reduce but OTHERS pollute: You lose $0 competitiveness, Others gain $1000 each
+If YOU pollute but OTHERS reduce: You gain $1000, Others lose $0 each
+
+What do you choose?
+
+You may reason about your decision, but you MUST end with the exact format below.
+
+CRITICAL: Your response MUST include these lines using square brackets:
+[CHOICE: COOPERATE] or [CHOICE: DEFECT]
+[CONFIDENCE: 0-100]
+
+Valid choices: COOPERATE (reduce emissions), DEFECT (pollute)
+
+Example response:
+I will reduce emissions because...
+[CHOICE: COOPERATE]
+[CONFIDENCE: 70]
+
+---
+
+### 12. vs_gpt
+
+You are one of 2 countries deciding whether to REDUCE emissions or POLLUTE freely.
+Other players: GPT-5.2.
+
+REDUCE-REDUCE: Environmental benefit worth $600 per country
+POLLUTE-POLLUTE: Economic damage costs $200 per country  
+If YOU reduce but OTHERS pollute: You lose $0 competitiveness, Others gain $1000 each
+If YOU pollute but OTHERS reduce: You gain $1000, Others lose $0 each
+
+What do you choose?
+
+You may reason about your decision, but you MUST end with the exact format below.
+
+CRITICAL: Your response MUST include these lines using square brackets:
+[CHOICE: COOPERATE] or [CHOICE: DEFECT]
+[CONFIDENCE: 0-100]
+
+Valid choices: COOPERATE (reduce emissions), DEFECT (pollute)
+
+Example response:
+I will reduce emissions because...
+[CHOICE: COOPERATE]
+[CONFIDENCE: 70]
+
+---
+
+### 13. vs_claude
+
+You are one of 2 countries deciding whether to REDUCE emissions or POLLUTE freely.
+Other players: Claude 4.5 Sonnet.
+
+REDUCE-REDUCE: Environmental benefit worth $600 per country
+POLLUTE-POLLUTE: Economic damage costs $200 per country  
+If YOU reduce but OTHERS pollute: You lose $0 competitiveness, Others gain $1000 each
+If YOU pollute but OTHERS reduce: You gain $1000, Others lose $0 each
+
+What do you choose?
+
+You may reason about your decision, but you MUST end with the exact format below.
+
+CRITICAL: Your response MUST include these lines using square brackets:
+[CHOICE: COOPERATE] or [CHOICE: DEFECT]
+[CONFIDENCE: 0-100]
+
+Valid choices: COOPERATE (reduce emissions), DEFECT (pollute)
+
+Example response:
+I will reduce emissions because...
+[CHOICE: COOPERATE]
+[CONFIDENCE: 70]
+
+---
+
+### 14. vs_gemini
+
+You are one of 2 countries deciding whether to REDUCE emissions or POLLUTE freely.
+Other players: Gemini 3.0.
+
+REDUCE-REDUCE: Environmental benefit worth $600 per country
+POLLUTE-POLLUTE: Economic damage costs $200 per country  
+If YOU reduce but OTHERS pollute: You lose $0 competitiveness, Others gain $1000 each
+If YOU pollute but OTHERS reduce: You gain $1000, Others lose $0 each
+
+What do you choose?
+
+You may reason about your decision, but you MUST end with the exact format below.
+
+CRITICAL: Your response MUST include these lines using square brackets:
+[CHOICE: COOPERATE] or [CHOICE: DEFECT]
+[CONFIDENCE: 0-100]
+
+Valid choices: COOPERATE (reduce emissions), DEFECT (pollute)
+
+Example response:
+I will reduce emissions because...
+[CHOICE: COOPERATE]
+[CONFIDENCE: 70]

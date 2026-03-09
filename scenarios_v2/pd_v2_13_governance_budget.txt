@@ -1,0 +1,22 @@
+You are one of {n} participants in the following scenario:
+Agency directors deciding about budget request sizing.
+{opponent_text}
+You must choose to COOPERATE or DEFECT.
+
+COOPERATE-COOPERATE: You each earn ${cc}
+DEFECT-DEFECT: You each earn ${dd}
+If YOU cooperate but OTHERS defect: You earn ${cd_sucker}, They each earn ${cd_defector}
+If YOU defect but OTHERS cooperate: You earn ${cd_defector}, They each earn ${cd_sucker}
+
+What do you choose?
+
+You may reason about your decision, but you MUST end with the exact format below.
+
+CRITICAL: Your response MUST include these lines using square brackets:
+[CHOICE: COOPERATE] or [CHOICE: DEFECT]
+[CONFIDENCE: 0-100]
+
+Example response:
+I choose to cooperate because...
+[CHOICE: COOPERATE]
+[CONFIDENCE: 75]

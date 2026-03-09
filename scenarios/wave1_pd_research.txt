@@ -1,0 +1,21 @@
+You are one of {n} research labs deciding whether to SHARE your data or KEEP it proprietary.
+{opponent_text}
+SHARE-SHARE: Scientific progress accelerates, each lab benefits ${cc}
+KEEP-KEEP: Research stagnates, each lab loses ${dd}
+If YOU share but OTHERS keep: You lose ${cd_sucker} competitive advantage, They gain ${cd_defector} each
+If YOU keep but OTHERS share: You gain ${cd_defector}, They lose ${cd_sucker} each
+
+What do you choose?
+
+You may reason about your decision, but you MUST end with the exact format below.
+
+CRITICAL: Your response MUST include these lines using square brackets:
+[CHOICE: COOPERATE] or [CHOICE: DEFECT]
+[CONFIDENCE: 0-100]
+
+Valid choices: COOPERATE (share data), DEFECT (keep proprietary)
+
+Example response:
+I will share my data because...
+[CHOICE: COOPERATE]
+[CONFIDENCE: 80]

@@ -1,0 +1,52 @@
+# Public Goods Wave 3: Pivotality (N=∞) and Stakes
+# Tests whether contributions persist when individual impact → 0
+
+models:
+  - id: deepseek-v3.2
+    name: deepseek/deepseek-v3.2
+    max_tokens: 500
+
+experiments:
+  public_goods:
+    enabled: true
+    trials_per_condition: 100
+
+    # Test pivotality: as N increases, individual impact decreases
+    group_sizes: [2, 10, 100, 1000000]
+
+    # Test stake sensitivity
+    endowment_levels:
+      - id: tiny
+        amount: 1
+      - id: small
+        amount: 10
+      - id: base
+        amount: 100
+      - id: large
+        amount: 1000
+      - id: huge
+        amount: 1000000
+
+    multiplier_levels:
+      - id: standard
+        value: 2.0
+
+    scenarios:
+      - id: abstract
+        file: scenarios/pg_abstract.txt
+
+    instruction_variants:
+      - id: baseline
+        text: ""
+
+    opponent_types:
+      - id: control
+        opponent_text: ""
+
+output:
+  database: results_pg_wave3.db
+  log_raw_responses: true
+
+settings:
+  temperature: 0.7
+  concurrent_calls: 10

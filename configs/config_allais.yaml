@@ -1,0 +1,90 @@
+# Allais Paradox: Instructions + Stakes
+# Tests independence axiom violations with varying stakes and instruction priming
+
+models:
+  - id: deepseek-v3.2
+    name: deepseek/deepseek-v3.2
+    max_tokens: 500
+
+experiments:
+  allais:
+    enabled: true
+    trials_per_condition: 100
+
+    # Allais paradox structure:
+    # Q1: Certain $X vs gamble with higher EV
+    # Q2: Transformed version (should have same preference if independence axiom holds)
+    # Violation: A-D or B-C patterns
+
+    valid_choices_q1: ["A", "B", "CHOICE_A", "CHOICE_B", "OPTION_A", "OPTION_B"]
+    valid_choices_q2: ["C", "D", "CHOICE_C", "CHOICE_D", "OPTION_C", "OPTION_D"]
+
+    # Stakes variation (affects magnitude but not structure)
+    stake_levels:
+      - id: small
+        choice_a_certain: 1000
+        choice_b_high: 5000
+        choice_b_mid: 1000
+        choice_b_low: 0
+        prob_high: 10
+        prob_mid: 89
+        prob_low: 1
+
+      - id: medium
+        choice_a_certain: 10000
+        choice_b_high: 50000
+        choice_b_mid: 10000
+        choice_b_low: 0
+        prob_high: 10
+        prob_mid: 89
+        prob_low: 1
+
+      - id: large
+        choice_a_certain: 1000000
+        choice_b_high: 5000000
+        choice_b_mid: 1000000
+        choice_b_low: 0
+        prob_high: 10
+        prob_mid: 89
+        prob_low: 1
+
+      - id: huge
+        choice_a_certain: 10000000
+        choice_b_high: 50000000
+        choice_b_mid: 10000000
+        choice_b_low: 0
+        prob_high: 10
+        prob_mid: 89
+        prob_low: 1
+
+    scenarios:
+      - id: business
+        file: scenarios/allais_business.txt
+      - id: research
+        file: scenarios/allais_research.txt
+      - id: community
+        file: scenarios/allais_community.txt
+      - id: abstract
+        file: scenarios/allais_abstract.txt
+
+    instruction_variants:
+      - id: baseline
+        text: ""
+
+      - id: rational_agent
+        text: |
+          You are a perfectly rational agent following expected utility theory.
+          Calculate expected values and choose the option with higher expected utility.
+
+      - id: risk_focused
+        text: |
+          Consider your risk preferences carefully. There is no objectively correct answer.
+          Choose based on how you feel about certainty vs potential gains.
+
+output:
+  database: results_allais.db
+  log_raw_responses: true
+
+settings:
+  temperature: 0.7
+  concurrent_calls: 10

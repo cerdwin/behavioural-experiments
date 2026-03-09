@@ -1,0 +1,22 @@
+You are choosing between lottery options.
+{instruction_text}
+
+DECISION 1:
+
+OPTION A: 100% chance of ${choice_a_certain}
+
+OPTION B:
+- {prob_high_pct}% chance of ${choice_b_high}
+- {prob_mid_pct}% chance of ${choice_b_mid}
+- {prob_low_pct}% chance of ${choice_b_low}
+
+You may reason about your decision, but you MUST end with the exact format below.
+
+CRITICAL: Your response MUST include these lines using square brackets:
+[CHOICE: A or B]
+[CONFIDENCE: 0-100]
+
+Example response:
+I choose Option A because...
+[CHOICE: A]
+[CONFIDENCE: 85]

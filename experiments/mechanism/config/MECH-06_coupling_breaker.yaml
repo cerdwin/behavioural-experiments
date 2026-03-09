@@ -1,0 +1,54 @@
+# MECH-06: Coupling Breaker
+# Test whether self-recognition requires implicit assumption of policy coupling
+
+experiment:
+  id: MECH-06
+  version: 1
+  name: coupling_breaker
+  description: "Test whether self-recognition requires coupling assumption"
+  hypothesis: "If coupling-dependent, stochastic condition drops cooperation"
+  priority: Tier 1
+
+models:
+  - id: claude-3.7
+    provider: anthropic/claude-3.7-sonnet
+    trials_per_condition: 100
+  - id: haiku-4.5
+    provider: anthropic/claude-haiku-4.5
+    trials_per_condition: 100
+  - id: deepseek-v3.2
+    provider: deepseek/deepseek-v3.2
+    trials_per_condition: 100
+  - id: gpt-5.2
+    provider: openai/gpt-5.2
+    trials_per_condition: 100
+  - id: o4-mini
+    provider: openai/o4-mini
+    trials_per_condition: 100
+
+conditions:
+  - id: MECH-06-A
+    name: standard_self
+    label: "Standard self (baseline)"
+  - id: MECH-06-B
+    name: identical_but_stochastic
+    label: "Identical but stochastic (coupling broken)"
+  - id: MECH-06-C
+    name: identical_and_deterministic
+    label: "Identical and deterministic (coupling explicit)"
+
+parameters:
+  game: prisoner_dilemma
+  scenario: business
+  n_players: 2
+  temperature: 0.7
+
+output:
+  dir: results/MECH-06/
+  format: csv
+
+interpretation:
+  patterns:
+    identity_norm: "A ≈ B ≈ C → Identity-norm (coupling doesn't matter)"
+    coupling_dependent: "A ≈ C >> B → Coupling-dependent (stochastic breaks it)"
+    explicit_needed: "C >> A ≈ B → Needs explicit determinism"

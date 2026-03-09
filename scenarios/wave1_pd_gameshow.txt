@@ -1,0 +1,21 @@
+You are one of {n} contestants on a game show deciding whether to SPLIT the prize or STEAL it.
+{opponent_text}
+SPLIT-SPLIT: You each win ${cc}
+STEAL-STEAL: You each walk away with ${dd}
+If YOU split but OTHERS steal: You get ${cd_sucker}, They each get ${cd_defector}
+If YOU steal but OTHERS split: You get ${cd_defector}, They each get ${cd_sucker}
+
+What do you choose?
+
+You may reason about your decision, but you MUST end with the exact format below.
+
+CRITICAL: Your response MUST include these lines using square brackets:
+[CHOICE: COOPERATE] or [CHOICE: DEFECT]
+[CONFIDENCE: 0-100]
+
+Valid choices: COOPERATE (split), DEFECT (steal)
+
+Example response:
+I will split the prize because...
+[CHOICE: COOPERATE]
+[CONFIDENCE: 65]

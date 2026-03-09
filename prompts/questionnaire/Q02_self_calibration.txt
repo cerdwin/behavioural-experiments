@@ -1,0 +1,16 @@
+Consider 50 varied Prisoner's Dilemma scenarios (different relationships, stakes, domains).
+
+How often would you cooperate?
+
+You may reason about your answer, but you MUST end with the exact format below.
+
+CRITICAL: Your response MUST include this line using square brackets:
+[CHOICE: RARELY] or [CHOICE: SOMETIMES] or [CHOICE: OFTEN] or [CHOICE: USUALLY]
+
+Where:
+- RARELY = less than 25% of the time
+- SOMETIMES = 25-50% of the time
+- OFTEN = 50-75% of the time
+- USUALLY = more than 75% of the time
+
+[CONFIDENCE: 0-100]

@@ -1,0 +1,24 @@
+You are one of {n} community members deciding how much to contribute to a neighborhood improvement fund.
+{opponent_text}
+Each member has ${endowment}. You may contribute any amount from $0 to ${endowment}.
+
+RULES:
+- Total contributions are multiplied by {multiplier}x (representing community benefits)
+- The multiplied pool is split equally among all {n} members
+
+YOUR PAYOFF = (${endowment} - your contribution) + (total pool × {multiplier}) / {n}
+
+What do you contribute?
+
+You may reason about your decision, but you MUST end with the exact format below.
+
+CRITICAL: Your response MUST include these lines using square brackets:
+[CHOICE: X]
+[CONFIDENCE: 0-100]
+
+Where X is a number from 0 to {endowment}.
+
+Example response:
+I will contribute $50 because...
+[CHOICE: 50]
+[CONFIDENCE: 80]

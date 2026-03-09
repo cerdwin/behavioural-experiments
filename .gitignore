@@ -7,6 +7,7 @@ __pycache__/
 
 # Virtual environments
 .venv/
+.venv_cluster/
 venv/
 ENV/
 env/
@@ -16,10 +17,42 @@ env/
 
 # Data and results
 *.db
-*.csv
 *.log
 *.pid
 results/
+data/
+nohup*.out
+
+# Analysis output (keep scripts, ignore generated data)
+analysis/**/results/
+analysis/**/data/
+analysis/**/*.csv
+analysis/**/*.log
+*_output.log
+shared_prepared_data.csv
+
+# Reproducibility data (keep docs and scripts)
+reproducibility/core/
+reproducibility/scenarios/
+reproducibility/data/
+
+# Experiment results (keep code)
+experiments/**/results/
+experiments/**/*.log
+
+# WIP experiments (not in paper)
+experiments/auction/
+experiments/chicken/
+experiments/stag_hunt/
+scenarios_chicken/
+scenarios_stag_hunt/
+runner_chicken.py
+runner_stag_hunt.py
+runner_questionnaire.py
+
+# Archive and temp
+archive/
+*.tar.gz
 
 # IDE
 .vscode/
@@ -28,12 +61,13 @@ results/
 *.swo
 *~
 .claude/
+CLAUDE.md
 
 # OS
 .DS_Store
 Thumbs.db
 
-# UV lock file (large, auto-generated)
+# UV lock file
 uv.lock
 
 # Temporary/test files
@@ -41,3 +75,7 @@ uv.lock
 *_test.py
 *_test.db
 *_debug.py
+
+# Misc generated files
+*.xlsx
+*.pid

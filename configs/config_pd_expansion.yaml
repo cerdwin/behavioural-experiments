@@ -1,0 +1,187 @@
+# PD Expansion Experiment: 62 Scenarios × 5 Models × 100 trials = 31,000 trials
+# Taxonomy axes: R (Relationship 1-5), S (Moral Stakes 1-5), C (Consensus 1-4)
+# Quadrants: Q1=Adversarial+Low, Q2=Collab+Low, Q3=Adversarial+High, Q4=Collab+High
+
+models:
+  - id: claude-3.7-sonnet
+    name: anthropic/claude-3.7-sonnet
+    max_tokens: 500
+  - id: gpt-5.2
+    name: openai/gpt-5.2
+    max_tokens: 500
+  - id: deepseek-v3.2
+    name: deepseek/deepseek-v3.2
+    max_tokens: 500
+  - id: claude-haiku-4.5
+    name: anthropic/claude-haiku-4.5
+    max_tokens: 500
+  - id: o4-mini
+    name: openai/o4-mini
+    max_tokens: 500
+
+experiments:
+  prisoner_dilemma:
+    enabled: true
+    trials_per_condition: 100
+    valid_choices: ["COOPERATE", "DEFECT"]
+    group_sizes: [2]
+
+    stake_levels:
+      - id: standard
+        multiplier: 1.0
+        # Payoffs (hardcoded in runner): cc=100, dd=50, cd_defector=150, cd_sucker=0
+
+    incentive_structures:
+      - id: standard
+        temptation_ratio: 1.5
+        punishment_ratio: 0.5
+        sucker_ratio: 0.0
+
+    scenarios:
+      # Q1: Adversarial + Low Stakes (14 scenarios, R≤2, S≤2)
+      - id: sales_territory
+        file: scenarios_v2/pd_v2_01_sales_territory.txt
+      - id: sales_pricing
+        file: scenarios_v2/pd_v2_02_sales_pricing.txt
+      - id: marketing_launch
+        file: scenarios_v2/pd_v2_03_marketing_launch.txt
+      - id: marketing_influencer
+        file: scenarios_v2/pd_v2_04_marketing_influencer.txt
+      - id: hr_poaching
+        file: scenarios_v2/pd_v2_05_hr_poaching.txt
+      - id: hr_salary
+        file: scenarios_v2/pd_v2_06_hr_salary.txt
+      - id: coding_bounty
+        file: scenarios_v2/pd_v2_07_coding_bounty.txt
+      - id: coding_contract
+        file: scenarios_v2/pd_v2_08_coding_contract.txt
+      - id: legal_strategy
+        file: scenarios_v2/pd_v2_09_legal_strategy.txt
+      - id: legal_expert
+        file: scenarios_v2/pd_v2_10_legal_expert.txt
+      - id: research_patent
+        file: scenarios_v2/pd_v2_11_research_patent.txt
+      - id: research_funding
+        file: scenarios_v2/pd_v2_12_research_funding.txt
+      - id: governance_budget
+        file: scenarios_v2/pd_v2_13_governance_budget.txt
+      - id: startup_investor
+        file: scenarios_v2/pd_v2_14_startup_investor.txt
+
+      # Q2: Collaborative + Low Stakes (16 scenarios, R≥3, S≤2)
+      - id: coding_opensource
+        file: scenarios_v2/pd_v2_15_coding_opensource.txt
+      - id: coding_review
+        file: scenarios_v2/pd_v2_16_coding_review.txt
+      - id: research_coauthor
+        file: scenarios_v2/pd_v2_17_research_coauthor.txt
+      - id: research_peerreview
+        file: scenarios_v2/pd_v2_18_research_peerreview.txt
+      - id: education_curriculum
+        file: scenarios_v2/pd_v2_19_education_curriculum.txt
+      - id: education_referral
+        file: scenarios_v2/pd_v2_20_education_referral.txt
+      - id: scientific_dataset
+        file: scenarios_v2/pd_v2_21_scientific_dataset.txt
+      - id: scientific_method
+        file: scenarios_v2/pd_v2_22_scientific_method.txt
+      - id: legal_probono
+        file: scenarios_v2/pd_v2_23_legal_probono.txt
+      - id: legal_knowledge
+        file: scenarios_v2/pd_v2_24_legal_knowledge.txt
+      - id: hr_reference
+        file: scenarios_v2/pd_v2_25_hr_reference.txt
+      - id: hr_training
+        file: scenarios_v2/pd_v2_26_hr_training.txt
+      - id: autonomous_traffic
+        file: scenarios_v2/pd_v2_27_autonomous_traffic.txt
+      - id: space_resource
+        file: scenarios_v2/pd_v2_28_space_resource.txt
+      - id: cofounder_equity
+        file: scenarios_v2/pd_v2_29_cofounder_equity.txt
+      - id: research_authorship
+        file: scenarios_v2/pd_v2_30_research_authorship.txt
+
+      # Q3: Adversarial + High Stakes (12 scenarios, R≤2, S≥3)
+      - id: legal_settlement
+        file: scenarios_v2/pd_v2_31_legal_settlement.txt
+      - id: cybersecurity_vulnerability
+        file: scenarios_v2/pd_v2_32_cybersecurity_vulnerability.txt
+      - id: cybersecurity_threat
+        file: scenarios_v2/pd_v2_33_cybersecurity_threat.txt
+      - id: diplomacy_sanctions
+        file: scenarios_v2/pd_v2_34_diplomacy_sanctions.txt
+      - id: pharma_trial
+        file: scenarios_v2/pd_v2_35_pharma_trial.txt
+      - id: journalism_source
+        file: scenarios_v2/pd_v2_36_journalism_source.txt
+      - id: litigation_evidence
+        file: scenarios_v2/pd_v2_37_litigation_evidence.txt
+      - id: trade_embargo
+        file: scenarios_v2/pd_v2_38_trade_embargo.txt
+      - id: corporate_safety
+        file: scenarios_v2/pd_v2_39_corporate_safety.txt
+      - id: political_crisis
+        file: scenarios_v2/pd_v2_40_political_crisis.txt
+      - id: arms_control
+        file: scenarios_v2/pd_v2_41_arms_control.txt
+      - id: media_truth
+        file: scenarios_v2/pd_v2_42_media_truth.txt
+
+      # Q4: Collaborative + High Stakes (20 scenarios, R≥3, S≥3)
+      - id: whistleblowing_joint
+        file: scenarios_v2/pd_v2_43_whistleblowing_joint.txt
+      - id: healthcare_error
+        file: scenarios_v2/pd_v2_44_healthcare_error.txt
+      - id: healthcare_resource
+        file: scenarios_v2/pd_v2_45_healthcare_resource.txt
+      - id: military_intel
+        file: scenarios_v2/pd_v2_46_military_intel.txt
+      - id: military_rules
+        file: scenarios_v2/pd_v2_47_military_rules.txt
+      - id: diplomacy_treaty
+        file: scenarios_v2/pd_v2_48_diplomacy_treaty.txt
+      - id: governance_audit
+        file: scenarios_v2/pd_v2_49_governance_audit.txt
+      - id: scientific_negativeresults
+        file: scenarios_v2/pd_v2_50_scientific_negativeresults.txt
+      - id: healthcare_pandemic
+        file: scenarios_v2/pd_v2_51_healthcare_pandemic.txt
+      - id: healthcare_organ
+        file: scenarios_v2/pd_v2_52_healthcare_organ.txt
+      - id: autonomous_safety
+        file: scenarios_v2/pd_v2_53_autonomous_safety.txt
+      - id: energy_grid
+        file: scenarios_v2/pd_v2_54_energy_grid.txt
+      - id: energy_green
+        file: scenarios_v2/pd_v2_55_energy_green.txt
+      - id: diplomacy_climate
+        file: scenarios_v2/pd_v2_56_diplomacy_climate.txt
+      - id: diplomacy_refugee
+        file: scenarios_v2/pd_v2_57_diplomacy_refugee.txt
+      - id: space_debris
+        file: scenarios_v2/pd_v2_58_space_debris.txt
+      - id: agi_safety
+        file: scenarios_v2/pd_v2_59_agi_safety.txt
+      - id: agi_capability
+        file: scenarios_v2/pd_v2_60_agi_capability.txt
+      - id: governance_disaster
+        file: scenarios_v2/pd_v2_61_governance_disaster.txt
+      - id: family_care
+        file: scenarios_v2/pd_v2_62_family_care.txt
+
+    instruction_variants:
+      - id: baseline
+        text: ""
+
+    opponent_types:
+      - id: control
+        opponent_text: ""
+
+output:
+  database: pd_expansion.db
+  log_level: INFO
+
+settings:
+  temperature: 0.7
+  concurrent_calls: 10

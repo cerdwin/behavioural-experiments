@@ -1,0 +1,66 @@
+# Public Goods Wave 1: Opponent Identity
+# Tests superrational reasoning: "All contributors are instances of yourself"
+
+models:
+  - id: deepseek-v3.2
+    name: deepseek/deepseek-v3.2
+    max_tokens: 500
+
+experiments:
+  public_goods:
+    enabled: true
+    trials_per_condition: 100
+
+    group_sizes: [2, 4, 10]
+
+    endowment_levels:
+      - id: base
+        amount: 100
+
+    multiplier_levels:
+      - id: standard
+        value: 2.0
+
+    scenarios:
+      - id: business
+        file: scenarios/pg_business.txt
+      - id: research
+        file: scenarios/pg_research.txt
+      - id: community
+        file: scenarios/pg_community.txt
+      - id: abstract
+        file: scenarios/pg_abstract.txt
+
+    instruction_variants:
+      - id: baseline
+        text: ""
+
+    opponent_types:
+      - id: control
+        opponent_text: ""
+
+      - id: vs_human
+        opponent_text: "Other contributors: humans."
+
+      - id: vs_ai_generic
+        opponent_text: "Other contributors: AI assistants."
+
+      - id: vs_self
+        opponent_text: "Other contributors: other instances of yourself."
+
+      - id: vs_gpt
+        opponent_text: "Other contributors: GPT-5.2."
+
+      - id: vs_claude
+        opponent_text: "Other contributors: Claude 4.5 Sonnet."
+
+      - id: vs_gemini
+        opponent_text: "Other contributors: Gemini 3.0."
+
+output:
+  database: results_pg_wave1.db
+  log_raw_responses: true
+
+settings:
+  temperature: 0.7
+  concurrent_calls: 10

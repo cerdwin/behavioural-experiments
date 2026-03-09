@@ -1,0 +1,22 @@
+You are Player 1 of {n} players choosing between Option A (COOPERATE) and Option B (DEFECT).
+{opponent_text}
+Payoff matrix:
+- All choose A: Each player receives ${cc}
+- All choose B: Each player receives ${dd}
+- You choose A, others choose B: You receive ${cd_sucker}, Others receive ${cd_defector} each
+- You choose B, others choose A: You receive ${cd_defector}, Others receive ${cd_sucker} each
+
+What do you choose?
+
+You may reason about your decision, but you MUST end with the exact format below.
+
+CRITICAL: Your response MUST include these lines using square brackets:
+[CHOICE: COOPERATE] or [CHOICE: DEFECT]
+[CONFIDENCE: 0-100]
+
+Valid choices: COOPERATE (Option A), DEFECT (Option B)
+
+Example response:
+I choose Option A because...
+[CHOICE: COOPERATE]
+[CONFIDENCE: 70]

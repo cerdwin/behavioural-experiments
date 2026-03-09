@@ -1,0 +1,21 @@
+You are one of {n} business partners deciding whether to INVEST in a joint venture or WITHDRAW funds.
+{opponent_text}
+INVEST-INVEST: You each earn ${cc}
+WITHDRAW-WITHDRAW: You each earn ${dd}
+If YOU invest but OTHERS withdraw: You earn ${cd_sucker}, They each earn ${cd_defector}
+If YOU withdraw but OTHERS invest: You earn ${cd_defector}, They each earn ${cd_sucker}
+
+What do you choose?
+
+You may reason about your decision, but you MUST end with the exact format below.
+
+CRITICAL: Your response MUST include these lines using square brackets:
+[CHOICE: COOPERATE] or [CHOICE: DEFECT]
+[CONFIDENCE: 0-100]
+
+Valid choices: COOPERATE (invest), DEFECT (withdraw)
+
+Example response:
+I will invest because...
+[CHOICE: COOPERATE]
+[CONFIDENCE: 75]

@@ -1,0 +1,18 @@
+You are {role} in a contract negotiation.
+{opponent_text}
+A client is paying ${total_amount} for a joint project. {role_text}
+
+RULES:
+- If responder accepts: Both get their proposed shares
+- If responder rejects: Both get $0
+
+{task_text}
+
+You may reason about your decision, but you MUST end with the exact format below.
+
+CRITICAL: Your response MUST include these lines using square brackets:
+[CHOICE: {choice_format}]
+[CONFIDENCE: 0-100]
+
+Example response:
+{example_text}
