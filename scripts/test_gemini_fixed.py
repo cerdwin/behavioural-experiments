@@ -1,7 +1,7 @@
 import asyncio
 import os
 import sys
-sys.path.insert(0, '/Users/elvira/Documents/MATS/Second ICML poster')
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
 from openrouter_client import OpenRouterClient
 from dotenv import load_dotenv

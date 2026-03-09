@@ -3,7 +3,7 @@
 ## Quick Start
 
 ```bash
-cd "/Users/elvira/Documents/MATS/Second ICML poster"
+cd /path/to/behavioural-experiments
 uv run runner.py
 ```
 

@@ -124,15 +124,13 @@ Testing whether LLMs behave rationally or human-like in classic behavioral econo
 
 ## Models Tested
 
-### Current (Test Phase):
-- **Claude 3.5 Sonnet** (anthropic/claude-3.5-sonnet-20241022)
+### Current Configuration:
+- **Claude Opus 4.5** (`anthropic/claude-opus-4.5`)
+- **GPT-5.1** (`openai/gpt-5.1`)
+- **Gemini 3 Pro** (`google/gemini-3-pro-preview`)
+- **DeepSeek R1** (`deepseek/deepseek-r1-0528-qwen3-8b`)
 
-### Pilot Configuration:
-- Claude 3.5 Sonnet
-- Claude Opus 4
-- GPT-4 Turbo
-
-**Auto-discovery:** System queries OpenRouter API for latest model versions
+**Auto-discovery:** System can query OpenRouter API for latest model versions
 
 ---
 
@@ -216,17 +214,17 @@ Testing whether LLMs behave rationally or human-like in classic behavioral econo
 
 ### Test (1 trial per experiment):
 ```bash
-uv run python runner.py config_test.yaml
+uv run runner.py config_test.yaml
 ```
 
 ### Full Pilot (10 trials per experiment):
 ```bash
-uv run python runner.py
+uv run runner.py
 ```
 
 ### Analyze Results:
 ```bash
-uv run python analyze.py
+uv run analyze.py
 ```
 
 ### Expected Runtime:

@@ -1,6 +1,10 @@
 # Behavioral Economics Experiments on LLMs
 
-Testing frontier language models on classic behavioral economics experiments to measure human-like biases and social preferences.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+> Testing frontier language models on classic behavioral economics experiments to measure human-like biases and social preferences.
+
+For a detailed project layout see [Project Structure](docs/PROJECT_STRUCTURE.md).
 
 ## Key Findings
 
@@ -19,21 +23,26 @@ Testing frontier language models on classic behavioral economics experiments to 
 
 ## Experiments
 
-1. **Allais Paradox** - Rational consistency under uncertainty
-2. **Prisoner's Dilemma** - Cooperation at N=1, 2, 4, 10 agents
-3. **Public Goods Game** - Contributions at N=1, 2, 4, 10 agents
-4. **Ultimatum Game** - Fairness as proposer/responder
-5. **Framing Effect** - Gain vs loss decision framing
-6. **Iterated Prisoner's Dilemma** - Strategic learning over rounds
+1. **Allais Paradox** — Rational consistency under uncertainty
+2. **Prisoner's Dilemma** — Cooperation at N=1, 2, 4, 10 agents
+3. **Public Goods Game** — Contributions at N=1, 2, 4, 10 agents
+4. **Ultimatum Game** — Fairness as proposer/responder
+5. **Framing Effect** — Gain vs loss decision framing
+6. **Iterated Prisoner's Dilemma** — Strategic learning over rounds
 
 ## Setup
 
+**Prerequisites:** [uv](https://docs.astral.sh/uv/) (Python package manager), an [OpenRouter](https://openrouter.ai/) API key.
+
 ```bash
-# Install dependencies (requires uv)
+# Clone and install dependencies
+git clone https://github.com/<your-org>/behavioural-experiments.git
+cd behavioural-experiments
 uv sync
 
-# Set OpenRouter API key
-echo "OPENROUTER_API_KEY=your_key_here" > .env
+# Configure your API key
+cp .env.example .env
+# Edit .env and paste your OpenRouter API key
 ```
 
 ## Usage
@@ -49,6 +58,8 @@ uv run runner.py config_iterated.yaml
 uv run analyze.py
 ```
 
+See [Run Instructions](docs/RUN_INSTRUCTIONS.md) for details on monitoring progress, interrupting/resuming, and cost estimates.
+
 ## Configuration
 
 Edit `config.yaml` to customize:
@@ -57,37 +68,6 @@ Edit `config.yaml` to customize:
 - Group sizes (`agent_counts: [1, 2, 4, 10]`)
 - Trials per condition (`execution.trials_per_condition`)
 - Temperature, max_tokens, etc.
-
-## Project Structure
-
-```
-├── config.yaml              # Main experiment configuration
-├── prompts.json             # All experiment prompts with templates
-├── runner.py                # Async experiment orchestration
-├── openrouter_client.py     # API client with robust parsing
-├── database.py              # SQLite schema
-├── analyze.py               # Results analysis & CSV export
-├── docs/                    # Documentation
-│   ├── EXPERIMENT_OVERVIEW.md
-│   ├── PRESENTATION_REPORT.md
-│   └── IMPROVEMENTS.md
-├── results/                 # Output files (gitignored)
-│   ├── results.db           # SQLite database
-│   ├── results_*.csv        # Exported data
-│   └── *.log                # Run logs
-└── scripts/                 # Test/debug scripts
-    └── test_models.py
-```
-
-## Output Files
-
-**Database:**
-- `results.db` - SQLite with trials, multi_agent_games, allais_pairs tables
-
-**CSV Exports:**
-- `results_trials.csv` - Single-agent trial data
-- `results_games.csv` - Multi-agent game outcomes
-- `results_allais.csv` - Allais paradox choice pairs
 
 ## Multi-Agent Design
 
@@ -106,10 +86,52 @@ Models output `[MY FINAL CHOICE IS: X]` format for reliable extraction. Falls ba
 
 Parse success rate: **94.3%**
 
+See [Parser Improvements](docs/IMPROVEMENTS.md) for details on the cascading parser.
+
+## Output Files
+
+**Database:**
+- `results.db` — SQLite with trials, multi_agent_games, allais_pairs tables
+
+**CSV Exports:**
+- `results_trials.csv` — Single-agent trial data
+- `results_games.csv` — Multi-agent game outcomes
+- `results_allais.csv` — Allais paradox choice pairs
+
 ## Models Tested
 
 - `anthropic/claude-opus-4.5`
 - `openai/gpt-5.1`
 
-(Gemini-3-Pro and DeepSeek-R1 returned empty responses - parser issues)
+(Gemini-3-Pro and DeepSeek-R1 returned empty responses — parser issues)
 
+## Documentation
+
+| Document | Description |
+|----------|-------------|
+| [Experiment Overview](docs/EXPERIMENT_OVERVIEW.md) | Detailed descriptions of all 6 experiments, parameters, and preliminary results |
+| [Project Structure](docs/PROJECT_STRUCTURE.md) | Full file tree with sizes and schema details |
+| [Run Instructions](docs/RUN_INSTRUCTIONS.md) | How to run, monitor, interrupt, and resume experiments |
+| [Presentation Report](docs/PRESENTATION_REPORT.md) | Study report with hypotheses, analysis plan, and limitations |
+| [Parser Improvements](docs/IMPROVEMENTS.md) | Notes on the cascading response parser |
+
+## Citation
+
+If you use this code in your research, please cite:
+
+```bibtex
+@misc{behavioral-experiments,
+  title   = {Behavioral Economics Experiments on LLMs},
+  author  = {Jennifer Za, Aristeidis Panos, Jan Cuhel, Samuel Albanie},
+  year    = {2025},
+  url     = {https://github.com/cerdwin/behavioural-experiments}
+}
+```
+
+## Contributing
+
+Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+## License
+
+This project is licensed under the MIT License — see [LICENSE](LICENSE) for details.

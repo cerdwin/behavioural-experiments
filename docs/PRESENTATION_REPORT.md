@@ -529,7 +529,7 @@ start = text.find('{')
 
 ### Repository Structure:
 ```
-/Users/elvira/Documents/MATS/Second ICML poster/
+behavioural-experiments/
 ├── runner.py              # Main experiment orchestration
 ├── openrouter_client.py   # API client with smart parsing
 ├── database.py            # SQLite schema

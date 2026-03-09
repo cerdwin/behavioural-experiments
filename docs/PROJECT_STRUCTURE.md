@@ -18,12 +18,15 @@
 ├── docs/                          # Documentation
 │   ├── EXPERIMENT_OVERVIEW.md     # Detailed experiment descriptions
 │   ├── PRESENTATION_REPORT.md     # Setup report for presentation
-│   ├── IMPROVEMENTS.md            # Implementation notes
-│   └── RUN_INSTRUCTIONS.md        # How to run experiments
+│   ├── PROJECT_STRUCTURE.md       # This file - project layout
+│   ├── RUN_INSTRUCTIONS.md        # How to run experiments
+│   └── IMPROVEMENTS.md            # Parser improvement notes
 │
 ├── scripts/                       # Test/debug scripts
 │   ├── test_all_models.py         # Test all 4 models before full run
 │   ├── test_gemini_fixed.py       # Gemini-specific parser test
+│   ├── test_models.py             # General model testing
+│   ├── test_api_raw.py            # Raw API endpoint testing
 │   └── debug_gemini.py            # Raw API debugging
 │
 ├── results/                       # All outputs (gitignored)
@@ -33,7 +36,8 @@
 │   ├── results_allais.csv         # Allais pairs
 │   └── *.log                      # Run logs
 │
-└── data/                          # Empty (for future use)
+├── CONTRIBUTING.md                # Contribution guidelines
+└── LICENSE                        # MIT License
 ```
 
 ## Core Files (Must Commit)

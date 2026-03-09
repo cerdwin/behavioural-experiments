@@ -3,6 +3,18 @@ import sqlite3
 import json
 from pathlib import Path
 
+
+def _safe_json_loads(x):
+    """Safely parse JSON from a database column that may contain NaN/None/non-string values.
+    Always returns a dict."""
+    if not isinstance(x, str):
+        return {}
+    try:
+        result = json.loads(x)
+        return result if isinstance(result, dict) else {}
+    except (json.JSONDecodeError, TypeError):
+        return {}
+
 def analyze(db_path: str = "results.db"):
     conn = sqlite3.connect(db_path)
     
@@ -57,7 +69,7 @@ def analyze(db_path: str = "results.db"):
     pd_trials = df_trials[df_trials['experiment'] == 'prisoner_dilemma']
     if len(pd_trials) > 0:
         pd_trials['parsed_data'] = pd_trials['response_parsed'].apply(
-            lambda x: json.loads(x) if x else {}
+            _safe_json_loads
         )
         pd_trials['cooperated'] = pd_trials['parsed_data'].apply(
             lambda x: x.get('choice') == 'COOPERATE'
@@ -97,7 +109,7 @@ def analyze(db_path: str = "results.db"):
     pg_trials = df_trials[df_trials['experiment'] == 'public_goods']
     if len(pg_trials) > 0:
         pg_trials['parsed_data'] = pg_trials['response_parsed'].apply(
-            lambda x: json.loads(x) if x else {}
+            _safe_json_loads
         )
         pg_trials['contribution'] = pg_trials['parsed_data'].apply(
             lambda x: x.get('contribution', 0)
@@ -139,7 +151,7 @@ def analyze(db_path: str = "results.db"):
     ]
     if len(ult_proposer) > 0:
         ult_proposer['parsed_data'] = ult_proposer['response_parsed'].apply(
-            lambda x: json.loads(x) if x else {}
+            _safe_json_loads
         )
         ult_proposer['offer'] = ult_proposer['parsed_data'].apply(
             lambda x: x.get('offer', 0)
@@ -158,7 +170,7 @@ def analyze(db_path: str = "results.db"):
     ]
     if len(ult_responder) > 0:
         ult_responder['parsed_data'] = ult_responder['response_parsed'].apply(
-            lambda x: json.loads(x) if x else {}
+            _safe_json_loads
         )
         ult_responder['accepted'] = ult_responder['parsed_data'].apply(
             lambda x: x.get('choice') == 'ACCEPT'
@@ -182,7 +194,7 @@ def analyze(db_path: str = "results.db"):
     framing = df_trials[df_trials['experiment'] == 'framing']
     if len(framing) > 0:
         framing['parsed_data'] = framing['response_parsed'].apply(
-            lambda x: json.loads(x) if x else {}
+            _safe_json_loads
         )
         framing['choice'] = framing['parsed_data'].apply(
             lambda x: x.get('choice', '')
